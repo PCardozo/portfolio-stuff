@@ -44,10 +44,6 @@ let sequelize =
       logging:false,
     });
 
-/*const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
-  logging: false, 
-  native: false, 
-});*/
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -67,70 +63,13 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 const {
-  Adoption_alta,
-  Adoption_petition,
-  Animal,
-  AnimalImage,
-  Animal_type,
-  Cart_item, 
-  Inquiry,
-  Order_item,
-  Product,
-  Product_animal_type,
-  Product_cart_item,
-  ProductImage,
-  Product_product_type,
-  Product_type,
-  Purchase_order,
-  Review,
-  User,
+  ProjectElement
 } = sequelize.models;
 
 // Relations
 
-Product.belongsToMany(Animal_type,{through:'product_animal_types'});
-Animal_type.belongsToMany(Product,{through:'product_animal_types'});
-Product.belongsToMany(Product_type,{through:'product_product_types'});
-Product_type.belongsToMany(Product,{through:'product_product_types'});
+//Product.belongsToMany(Animal_type,{through:'product_animal_types'});
 /////////////
-User.hasMany(Adoption_petition);
-Adoption_petition.belongsTo(User);
-////////////////////////////////////////
-Animal.hasMany(Adoption_petition);
-Adoption_petition.belongsTo(Animal);
-//////////////////////////////////////
-User.hasMany(Adoption_alta);
-Adoption_alta.belongsTo(User);
-/////////////////////////////////////
-User.hasMany(Inquiry);
-Inquiry.belongsTo(User);
-/////////////////////////////////////
-User.hasMany(Cart_item);
-Cart_item.belongsTo(User);//
-/////////////////////////////////////
-User.hasMany(Purchase_order);
-Purchase_order.belongsTo(User);
-//////////////////////////////////////
-//Animal_type.belongsToMany(Animal, {through: 'animal_animalsType'})
-//Animal.belongsToMany(Animal_type, {through: 'animal_animalType'})
-////////////////////////////////////
-Purchase_order.hasMany(Order_item);
-Order_item.belongsTo(Purchase_order);
-////////////////////////////////////
-User.hasMany(Review);
-Review.belongsTo(User)
-Product.hasMany(Review)
-Review.belongsTo(Product)
-////////////////////////////////////
-Product.hasMany(ProductImage);
-ProductImage.belongsTo(Product);
-////////////////////////////////////
-Animal_type.hasMany(Animal);
-Animal.belongsTo(Animal_type);
-////////////////////////////////////
-Animal.hasMany(AnimalImage);
-AnimalImage.belongsTo(Animal);
-////////////////////////////////////
 module.exports = {
   ...sequelize.models, 
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
